@@ -25,6 +25,9 @@ classifiers = [
     # Legacy "License :: ..." classifiers are removed completely
 ]
 
+
+[project.scripts]
+astrosoft = "jhora.ui.classic_app:main"
 [tool.setuptools.package-data]
 "jhora.lang" = ["*"]
 "jhora.images" = ["*"]

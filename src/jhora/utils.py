@@ -428,6 +428,10 @@ def set_language(language=None):
         
         get_resource_lists(language_list_file)
         resource_strings = get_resource_messages(language_message_file=language_message_file)
+        if language != 'en':
+            english_message_file = const._LANGUAGE_PATH+const._DEFAULT_LANGUAGE_MSG_STR+'en.txt'
+            for key, value in get_resource_messages(language_message_file=english_message_file).items():
+                resource_strings.setdefault(key, value)
 def _read_resource_messages_from_file(message_file):
     if not os.path.exists(message_file):
         print('Error: List Types File:'+message_file+' does not exist. Script aborted.')

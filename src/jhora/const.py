@@ -224,7 +224,7 @@ mandocca_moon_at_kali = 90.0
 _planet_symbols=['ℒ','☉','☾','♂','☿','♃','♀','♄','☊','☋']
 _zodiac_symbols = ['\u2648', '\u2649', '\u264A', '\u264B', '\u264C', '\u264D', '\u264E', '\u264F', '\u2650', '\u2651', '\u2652', '\u2653']
 
-available_languages = {"English":'en','Tamil':'ta','Telugu':'te','Hindi':"hi",'Kannada':'ka','Malayalam':'ml'}
+available_languages = {"English":'en','Tamil':'ta','Telugu':'te','Hindi':"hi",'Kannada':'ka','Malayalam':'ml','Sinhala':'si'}
 reverse_languages = {v: k for k, v in available_languages.items()}
 " declare constants "
 """
