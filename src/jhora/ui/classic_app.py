@@ -4,7 +4,7 @@ import json
 import os
 import sys
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import QSettings, Qt
 from PyQt6.QtGui import QAction, QFont, QFontDatabase, QPainter, QKeySequence
 from PyQt6.QtPrintSupport import QPrintDialog, QPrinter, QPrintPreviewDialog
 from PyQt6.QtWidgets import (
@@ -42,8 +42,11 @@ def _preferred_application_font():
 
 
 class AstrosoftMainWindow(QMainWindow):
-    def __init__(self, language="English", parent=None):
+    def __init__(self, language=None, parent=None):
         super().__init__(parent)
+        self._settings = QSettings("ASTROSOFT", "ASTROSOFT")
+        if language is None:
+            language = self._settings.value("language", "English", type=str)
         self.language = language if language in const.available_languages else "English"
         self._documents = {}
         self.setWindowTitle("ASTROSOFT - Classic Edition")
@@ -434,6 +437,9 @@ class AstrosoftMainWindow(QMainWindow):
                 data = json.load(source)
             if data.get("format") != "astrosoft-horoscope" or data.get("version") != 1:
                 raise ValueError("Unsupported horoscope file format.")
+            file_language = data.get("language")
+            if file_language in const.available_languages and file_language != self.language:
+                self._set_language(file_language)
             chart = self._new_horoscope()
             chart.name(data.get("name", ""))
             chart.date_of_birth(data.get("date_of_birth", chart._dob_text.text()))
@@ -498,6 +504,7 @@ class AstrosoftMainWindow(QMainWindow):
 
     def _set_language(self, language):
         self.language = language
+        self._settings.setValue("language", language)
         utils.set_language(const.available_languages[language])
         for name, action in self.language_actions.items():
             action.setChecked(name == language)
