@@ -504,7 +504,10 @@ class AstrosoftMainWindow(QMainWindow):
         QApplication.setFont(_preferred_application_font())
         for chart in self._documents:
             chart.language(language)
-            chart.compute_horoscope()
+            chart.resources = utils.resource_strings
+            chart._update_main_window_label_and_tooltips()
+            if chart._validate_ui():
+                chart.compute_horoscope()
         self._active_document_changed()
 
     def _open_options(self):
